@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api
+from flask_restful import Api, reqparse
 from flask_jwt import JWT
 
 # from security import authenticate, identity
@@ -23,6 +23,10 @@ api.add_resource(LocationList, '/locations')
 api.add_resource(Location, '/locations/<id>')
 api.add_resource(TourList, '/tours')
 api.add_resource(Tour, '/tours/<name>')
+# api.add_resource(TourStop, '/tours/<name>')
+
+# @app.route('/tours/<name>/add', methods=['POST'])
+# def add_stop(tour)
 
 # jwt = JWT(app, authenticate, identity)
 

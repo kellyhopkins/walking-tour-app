@@ -10,14 +10,15 @@ class TourModel(db.Model):
 
     stops = db.relationship('TourStop', lazy='dynamic')
 
-    def __init__(self, tour_name, tour_location, tour_num_stops, stops):
+    def __init__(self, tour_name, tour_location, tour_num_stops):
         self.tour_name = tour_name
         self.tour_location = tour_location
         self.tour_num_stops = tour_num_stops
-        self.stops = stops
+        # self.stops = stops
     
     def json(self):
         return {
+            "tour_id": self._id,
             "tour_name": self.tour_name,
             "tour_location": self.tour_location,
             "num_stops": self.tour_num_stops,
@@ -37,22 +38,22 @@ class TourModel(db.Model):
         return cls.query.filter_by(tour_name=name).first()
 
 
-class TourStop(db.Model):
-    __tablename__ = "tourstops"
+# class TourStop(db.Model):
+#     __tablename__ = "tourstops"
 
-    _id = db.Column(db.Integer, primary_key=True)
-    location_id = db.Column(db.Integer, db.ForeignKey('locations._id'))
-    tour_id = db.Column(db.Integer, db.ForeignKey('tours._id'))
-    stop_number = db.Column(db.Integer)
+#     _id = db.Column(db.Integer, primary_key=True)
+#     location_id = db.Column(db.Integer, db.ForeignKey('locations._id'))
+#     tour_id = db.Column(db.Integer, db.ForeignKey('tours._id'))
+#     stop_number = db.Column(db.Integer)
 
-    location = db.relationship('LocationModel')
-    tour = db.relationship('TourModel')
+#     location = db.relationship('LocationModel')
+#     tour = db.relationship('TourModel')
 
-    def __init__(self, location_id, tour_id, stop_number):
-        self.location_id = location_id
-        self.tour_id = tour_id
-        self.stop_number = stop_number
+#     def __init__(self, location_id, tour_id, stop_number):
+#         self.location_id = location_id
+#         self.tour_id = tour_id
+#         self.stop_number = stop_number
     
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
+#     def save_to_db(self):
+#         db.session.add(self)
+#         db.session.commit()

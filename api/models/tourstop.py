@@ -16,6 +16,13 @@ class TourStop(db.Model):
         self.tour_id = tour_id
         self.stop_number = stop_number
     
+    def json(self):
+        return {
+            "location_id": self.location_id,
+            "tour_id": self.tour_id,
+            "stop_number": self.stop_number
+        }
+    
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
