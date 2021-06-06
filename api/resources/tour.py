@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from models.tour import TourModel
 from models.tourstop import TourStop
+from models.stop import StopModel
 
 class Tour(Resource):
     parser = reqparse.RequestParser()
@@ -24,8 +25,8 @@ class Tour(Resource):
         tour = TourModel.find_by_id(name)
         if tour:
             data = Tour.parser.parse_args()
-            print(TourStop)
-            stop = TourStop(**data)
+            # stop = TourStop(**data)
+            stop = StopModel(**data)
             stop.save_to_db()
             return {"Message": "Tour stop added successfully"}
         
@@ -88,7 +89,8 @@ class TourStop(Resource):
         tour = TourModel.find_by_id(tour_id)
         if tour:
             data = TourStop.parser.parse_args()
-            stop = TourStop(**data)
+            # stop = TourStop(**data)
+            stop = StopModel(**data)
             stop.save_to_db()
             return {"Message": "Tour stop added successfully"}
         

@@ -8,7 +8,9 @@ class TourModel(db.Model):
     tour_location = db.Column(db.String(80))
     tour_num_stops = db.Column(db.Integer)
 
-    stops = db.relationship('TourStop', lazy='dynamic')
+    # stops = db.relationship('StopModel', lazy='dynamic')
+
+    stops = db.relationship('StopModel', backref='TourModel', lazy='subquery')
 
     def __init__(self, tour_name, tour_location, tour_num_stops):
         self.tour_name = tour_name
@@ -22,7 +24,7 @@ class TourModel(db.Model):
             "tour_name": self.tour_name,
             "tour_location": self.tour_location,
             "num_stops": self.tour_num_stops,
-            "stops": self.stops.all()
+            "stops": [x.json() for x in self.stops]
         }
     
     def save_to_db(self):
