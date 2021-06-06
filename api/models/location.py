@@ -31,3 +31,7 @@ class LocationModel(db.Model):
     @classmethod
     def find_by_id(cls, id):
         return cls.query.filter_by(_id=id).first()
+    
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(loc_name=name).first()

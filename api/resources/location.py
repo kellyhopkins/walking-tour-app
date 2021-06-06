@@ -38,6 +38,9 @@ class LocationList(Resource):
     
     def post(self):
         data = LocationList.parser.parse_args()
+        item = LocationModel.find_by_name(data["loc_name"])
+        if item:
+            return {"Message": "location already exists"}
         # location = LocationModel(data["loc_name"], data["loc_address"], data["loc_description"], data["loc_category"])
         location = LocationModel(**data)
         location.save_to_db()

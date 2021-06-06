@@ -60,9 +60,15 @@ class TourList(Resource):
 
     def post(self):
         data = TourList.parser.parse_args()
+        item = TourModel.find_by_name(data["tour_name"])
+        if item:
+            return{"Message": "A tour with that name already exists"}
+            
         tour = TourModel(**data)
         tour.save_to_db()
         return {"Message": "Tour added successfully"}
+        
+        
     
     def get(self):
         return {'tours': list(map(lambda x: x.json(), TourModel.query.all()))}

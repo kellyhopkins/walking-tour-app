@@ -21,7 +21,7 @@ loc_data["citystate"] = loc_data.apply(lambda x: x.cityname + ", " + x.stateabbr
 fake.random_element(loc_data.citystate)
 
 tour = lambda: {
-    "tour_name": fake.sentence(nb_words=5).replace(".", ""),
+    "tour_name": fake.sentence(nb_words=3).replace(".", ""),
     "tour_location": fake.random_element(loc_data.citystate),
     "tour_num_stops": random.randint(1,10)
 }
@@ -40,3 +40,14 @@ headers = {
 }
 payload = profile()
 r = requests.post(url, data=payload)
+
+
+locations = "/locations"
+for i in range(10):
+    r = requests.post(url + locations, data=location())
+    print(r.json())
+    
+tours = "/tours"
+for i in range(3):
+    r = requests.post(url + tours, data=tour())
+    print(r.json())
