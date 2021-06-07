@@ -26,10 +26,15 @@ container = html.Div([
 @app.callback(Output('page-content', 'children'), Input('url', 'pathname'))
 def display_page(pathname):
     routes = {
-        "/": tours.layout
+        "/": tours.layout_list(),
     }
     print(pathname)
-    return routes[pathname]
+    if pathname in routes:
+        return routes[pathname]
+    else:
+        if pathname.startswith("/tours/"):
+            tour_id = pathname.split("/")[-1]
+            return tours.layout_info(tour_id)
 
 app.layout = dbc.Container(container, fluid=True)
 
